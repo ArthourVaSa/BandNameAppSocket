@@ -48,7 +48,6 @@ class _HomePageState extends State<HomePage> {
       direction: DismissDirection.startToEnd,
       onDismissed: (direction) {
         // TODO: llamar el borrado en el server
-        print("$direction: direction");
       },
       background: Container(
         padding: const EdgeInsets.only(left: 8.0),
