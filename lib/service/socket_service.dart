@@ -1,4 +1,4 @@
-// ignore_for_file: constant_identifier_names, unnecessary_this, unused_field, prefer_final_fields
+// ignore_for_file: constant_identifier_names, unnecessary_this, unused_field, prefer_final_fields, avoid_print
 
 import 'package:flutter/cupertino.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -11,28 +11,37 @@ enum ServerStatus {
 
 class SocketService with ChangeNotifier {
   ServerStatus _serverStatus = ServerStatus.Connecting;
+  late IO.Socket _socket;
 
   SocketService() {
     this._initConfig();
   }
 
-  get serverStatus => this._serverStatus;
+  ServerStatus get serverStatus => this._serverStatus;
+  IO.Socket get socket => this._socket;
+  get emit => this._socket.emit;
 
   void _initConfig() {
-    IO.Socket socket = IO.io('http://192.168.114.100:3000', {
+    this._socket = IO.io('http://192.168.1.43:3000', {
       'transports': ['websocket'],
       'autoConnect': true,
     });
-    socket.onConnect((_) {
-      print('connect');
+
+    this._socket.onConnect((_) {
       this._serverStatus = ServerStatus.Online;
-      socket.emit('msg', 'test');
       notifyListeners();
     });
-    socket.onDisconnect((_) {
-      this._serverStatus = ServerStatus.Online;
-      socket.emit('msg', 'test');
+
+    this._socket.onDisconnect((_) {
+      this._serverStatus = ServerStatus.Offline;
       notifyListeners();
     });
+
+    // socket.on('nuevo-mensaje', (payload) {
+    //   print('nuevo-mensaje: $payload');
+    //   print('nombre: ${payload["nombre"]}');
+    //   print('mensaje: ${payload['mensaje']}');
+    // });
+
   }
 }
