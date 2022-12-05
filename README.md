@@ -1,6 +1,9 @@
 # band_name_app_socket
 
-A new Flutter project.
+This project was a socket service practice. I will be creating more projects to improve my skills like a 
+Flutter developer.
+
+This is a simple app band socket mobile application.
 
 ## Getting Started
 
