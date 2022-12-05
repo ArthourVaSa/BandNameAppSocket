@@ -22,7 +22,9 @@ class SocketService with ChangeNotifier {
   get emit => this._socket.emit;
 
   void _initConfig() {
-    this._socket = IO.io('http://192.168.1.43:3000', {
+    // 192.168.114.100 - laptop
+    // 192.168.1.43 - pc
+    this._socket = IO.io('http://192.168.114.100:3000', {
       'transports': ['websocket'],
       'autoConnect': true,
     });
@@ -42,6 +44,5 @@ class SocketService with ChangeNotifier {
     //   print('nombre: ${payload["nombre"]}');
     //   print('mensaje: ${payload['mensaje']}');
     // });
-
   }
 }
